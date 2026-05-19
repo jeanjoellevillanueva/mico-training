@@ -61,7 +61,9 @@ def add_page(cat, title, url, views=0):
     return p
 
 def add_cat(name):
-
+    # Each category has a default number of views and likes associated with it.
+    # Exercise: Add more categories and pages to populate() and add appropriate number of views and likes to each category.
+    # Simple logic for the number of views and likes for each category.
     if name == 'Python':
         views = 128
         likes = 64
@@ -74,7 +76,7 @@ def add_cat(name):
     else:
         views = 32
         likes = 16
-        
+    ###########################
     c = Category.objects.get_or_create(name=name)[0]
     c.save()
     return c
