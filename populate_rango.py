@@ -54,9 +54,17 @@ def populate():
             print(f'- {c}: {p}')
 
 def add_page(cat, title, url, views=0):
-    p = Page.objects.get_or_create(category=cat, title=title)[0]
-    p.url=url 
-    p.views=views 
+    # get_or_create = "find it or make it"
+    # save = "write it into the database"
+    # return = "give me the result back"
+
+# This code create page properly with the url and views fields,
+#  and it also uses the get_or_create method to avoid creating duplicate pages.
+    p, created = Page.objects.get_or_create(
+        category=cat,
+        title=title,
+        defaults={'url': url, 'views': views}
+    )
     p.save()
     return p
 
