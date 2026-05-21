@@ -29,7 +29,13 @@ class QuestionAdmin(admin.ModelAdmin): # Chapter 7 of tutorial
 class PageAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'url') 
 
+# customise the admin interface so that it automatically pre-populates
+# the slug field as you type in the category name.
+class CategoryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)} 
+
+
 # This code telling Django to “Make these models appear in the admin panel.”
-admin.site.register(Category)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Page, PageAdmin) 
 admin.site.register(Question, QuestionAdmin)

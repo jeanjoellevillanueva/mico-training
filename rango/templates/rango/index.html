@@ -1,36 +1,34 @@
-<!DOCTYPE html>
-
 {% load static %}
-
+<!DOCTYPE html>
 <html>
-<head>
-    <title>About</title>
-</head>
-
-<body>
-    <h1>Rango says...</h1>
+    <head>
+        <title>Rango</title>
+    </head>
+    <body>
+        <h1>Rango says...</h1>
+        <div>
+            hey there partner! <br />
+            <strong>{{ aboldmessage }}</strong><br />
+        </div>
+        <div>
+        {% if categories %}
+            <ul>
+            {% for category in categories %}
+                <li>
+                <!-- The following line is changed to add an HTML hyperlink -->
+                <a href="/rango/category/{{ category.slug }}/">{{ category.name }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>There are no categories present.</strong>
+        {% endif %}
+        </div>
 
     <div>
-        here is the about page.
-    </div>
-
-    <div>
-        This tutorial has been put together by Mico Jose.
-    </div>
-
-    <div>
-        <a href="/rango/">Index</a>
-    </div>
-
-    <div>
+        <a href="/rango/about/">About</a>
         <img src="{% static 'images/mico.jpg' %}"
              alt="Picture of Rango" />
     </div>
-
-    <div>
-        <img src="/media/cat.jpg"
-             alt="Picture of a Cat" />
-    </div>
-
-</body>
+    </body>
 </html>
