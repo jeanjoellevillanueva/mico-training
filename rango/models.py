@@ -1,8 +1,10 @@
 import datetime 
+import re
 from django.contrib import admin
 from django.db import models
 from django.utils import timezone
 from django.template.defaultfilters import slugify
+from django import forms
 
 # From Django tutorial 
 class Question(models.Model):
@@ -60,3 +62,21 @@ class Page(models.Model):
 
     def __str__(self):
         return self.title 
+    
+#This block of code is used to clean and fix the URL before saving it.
+#Its main job is:
+#“Make sure every URL starts with https://.”
+class PageForm(forms.ModelForm):
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        url = cleaned_data.get('url')
+        # Strip away any leading http or https 
+        url =re.sub(r'^https?://', '', url)
+        # If url is not empty and doesn't start with 'https://',
+        # then prepend 'https://' as we want to make sure
+        # we are accessing a secure site
+        if url: 
+            url = f'https://{url}'
+            cleaned_data['url'] = url
+        return cleaned_data

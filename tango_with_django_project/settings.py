@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import os 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# DIRS is a list of filesystem directories to check when loading Django templates; it’s a search path. #Chapter 7
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [STATIC_DIR, ]
