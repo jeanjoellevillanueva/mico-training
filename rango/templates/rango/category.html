@@ -1,45 +1,29 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
-    <body>
-        <h1>Rango says...</h1>
-        <div>
-            <h2>Most Liked Categories</h2>
+{% extends 'rango/base.html' %}
+{% load static %}
 
-            {% if categories %}
-                <ul>
-                    {% for category in categories %}
-                        <li>
-                            <a href="{% url 'rango:show_category' category.slug %}">
-                                {{ category.name }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <strong>There are no categories present.</strong>
-            {% endif %}   
-        </div>
+{% block title_block %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Unknown Category
+    {% endif %}
+{% endblock %}
 
-        <div>
-            <h2>Most Viewed Pages</h2>
+{% block body_block %}
+    {% if category %}
+    <h1>{{ category.name }}</h1>
+    {% if pages %}
+    <ul>
+        {% for page in pages %}
+        <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <strong>No pages currently in category.</strong>
+    {% endif %}
 
-            {% if pages %}
-                <ul>
-                    {% for page in pages %}
-                        <li>
-                            <a href="{{ page.url }}">{{ page.title }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <strong>No pages currently in category.</strong>
-            {% endif %}
-         </div>
-      
-        <a href="{% url 'rango:add_page' category.slug %}">Add Page</a> <br/>
-        
-    </body>
-</html> 
+    <a href="{% url 'rango:add_page' category.slug %}">Add Page</a> <br />
+    {% else %}
+    The specified category does not exist.
+    {% endif %}
+{% endblock %}
