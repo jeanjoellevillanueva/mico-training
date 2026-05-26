@@ -1,6 +1,7 @@
 from django import forms
 from .models import Category, Page
-
+from django.contrib.auth.models import User # Chapter 9.4 User Model (Since we reference the default User model, we need to import it)
+from rango.models import UserProfile 
 
 class CategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128, 
@@ -34,3 +35,15 @@ class PageForm(forms.ModelForm):
         exclude = ('category',)
         # or specify the fields to include (don't include the category field).
         #fields = ('title', 'url', 'views')
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')  
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('website', 'picture')

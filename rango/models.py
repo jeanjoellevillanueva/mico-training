@@ -5,6 +5,10 @@ from django.db import models
 from django.utils import timezone
 from django.template.defaultfilters import slugify
 from django import forms
+from django.contrib.auth.models import User  # Chapter 9.4 User Model (Since we reference the default User model, we need to import it)
+
+                                            
+
 
 # From Django tutorial 
 class Question(models.Model):
@@ -80,3 +84,15 @@ class PageForm(forms.ModelForm):
             url = f'https://{url}'
             cleaned_data['url'] = url
         return cleaned_data
+    
+# Chapter 9.4 User Model 
+class UserProfile(models.Model):
+    # This line is required. Link UserProfile to a User model instance.
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE)
+
+    # The additional attributes we wish to include.
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+
+    def __str__(self):
+        return self.user.username

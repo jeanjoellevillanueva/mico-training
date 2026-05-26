@@ -1,6 +1,7 @@
 from django.contrib import admin
 from rango.models import Category, Page 
 from .models import Question, Choice
+from rango.models import UserProfile 
 # Register your models here.
 
 # Chapter 7 of tutorial of Writing your first Django app 
@@ -39,3 +40,4 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Page, PageAdmin) 
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(UserProfile)
