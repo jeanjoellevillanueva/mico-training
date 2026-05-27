@@ -134,3 +134,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+LOGIN_URL = 'rango:login' # “If a user is NOT logged in, send them to this page.”

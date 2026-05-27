@@ -12,4 +12,8 @@ urlpatterns = [
     path('category/<slug:category_name_slug>/add_page/',
          views.add_page, name='add_page'),
     path('register/', views.register, name='register'), # New Mapping for the register view
+    path('login/', views.user_login, name='login'), # New Mapping for the login view
+    path('restricted/', views.restricted, name='restricted'), # New Mapping for the restricted view
+    path('logout/', views.user_logout, name='logout'), # New Mapping for the logout view
+    
 ] 
