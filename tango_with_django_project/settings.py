@@ -39,14 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    'django.contrib.sessions', # Chapter 10: application to store session information in a Django model/database
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
+# Chapter 10: Setting up Session in Django
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', # SessionMiddleware middleware that enables the creation of unique sessionid cookies.
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
