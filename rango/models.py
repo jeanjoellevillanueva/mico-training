@@ -5,9 +5,7 @@ from django.db import models
 from django.utils import timezone
 from django.template.defaultfilters import slugify
 from django import forms
-from django.contrib.auth.models import User  # Chapter 9.4 User Model (Since we reference the default User model, we need to import it)
-
-                                            
+from django.contrib.auth.models import User
 
 
 # From Django tutorial 
