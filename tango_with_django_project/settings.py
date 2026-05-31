@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions', # Chapter 10: application to store session information in a Django model/database
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'registration', # Add in the registration package 
 ]
 # Chapter 10: Setting up Session in Django
 MIDDLEWARE = [
@@ -136,3 +137,19 @@ MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_URL = 'static/'
 
 LOGIN_URL = 'rango:login' # “If a user is NOT logged in, send them to this page.”
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 1209600 # 2 weeks, in seconds
+
+# If True, users can register.
+REGISTRATION_OPEN = True 
+
+# If True, the user will be automatically logged in after registering.
+REGISTRATION_AUTO_LOGIN = True 
+
+# The URL that Django redirects users to after logging in.
+LOGIN_REDIRECT_URL = 'rango:index'
+
+# The page users are directed to if they are not logged in.
+# This was set in a previous chapter. The registration package uses this, too.
+LOGIN_URL = 'auth_login'

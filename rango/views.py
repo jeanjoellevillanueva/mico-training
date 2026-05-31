@@ -137,7 +137,7 @@ def add_page(request, category_name_slug):
     return render(request, 'rango/add_page.html', context=context_dict)
 
 
-def register(request):
+#def register(request):
     # A boolean value for telling the template
     # whether the registration was successful.
     # Set to False initially. Code changes value to
@@ -199,7 +199,7 @@ def register(request):
                    'profile_form': profile_form,
                    'registered': registered})
 
-def user_login(request):
+#def user_login(request):
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
         # Gather the username and password provided by the user.
@@ -245,8 +245,8 @@ def restricted(request):
 
 # Use the login_required() decorator to ensure only those 
 # logged in can access the view.
-@login_required
-def user_logout(request):
+#@login_required
+#def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
     logout(request)
 
