@@ -1,15 +1,30 @@
-{% extends 'rango/base.html' %}+
+{% extends 'rango/base.html' %}
 
 {% block title_block %}
         Register
 {% endblock %}
 
 {% block body_block %}
-        <h1> Register Here </h1>
-
-        <form method="post" action=".">
+<div class="container-fluid py-3">
+ <div class="row bg-light rounded-3">
+  <h1 class="display-5 fw-bold">Register Here</h1>
+ </div>
+ <div class="row py-5">
+ <div class="col-md-6">
+        {% if form.errors %}
+          <div class="alert alert-danger">
+                {{ form.errors }}
+          </div>
+        {% endif %}
+          <form method="post">
                 {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Register" />
-        </form>
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-primary">
+                        Register
+                </button>
+          </form>
+  </div>
+  </div>
+</div>
 {% endblock %}

@@ -4,15 +4,22 @@
     {% endblock %}
 
 {% block body_block %}
-        <h1>Login</h1>
-        <form method="post" action=".">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input type="submit" value="Log In" />
-                <input type="hidden" name="next" value="{{ next }}" />
-        </form>
-        <p>
-                Not registered?
-                <a href="{% url 'registration_register' %}">Register here!</a>
-        </p>
+ <div class="container-fluid py-3">
+  <div class="row bg-light rounded-3">
+   <h1 class="display-5 fw-bold">Login to Rango</h1>
+  </div>
+  <div class="row py-5">
+   <div class="col-md-6">
+    <form id="login_form" method="post"
+     action="{% url 'login' %}">
+     {% csrf_token %}
+     Username: <input type="text"
+      name="username" value="" size="50" /> <br />
+     Password: <input type="password"
+      name="password" value="" size="50" /> <br />
+     <input type="submit" value="Login" />
+    </form>
+   </div>
+  </div>
+ </div>
 {% endblock %}
