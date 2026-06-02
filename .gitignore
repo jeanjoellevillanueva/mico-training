@@ -1,0 +1,19 @@
+# secret key
+serpapi.key
+
+# python cache
+__pycache__/
+*.pyc
+
+# database
+db.sqlite3
+
+# env (if you use one)
+env/
+venv/
+.venv/
+
+# IDE
+.vscode/
+
+rango/search.json
