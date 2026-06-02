@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.contrib.auth.forms import UserCreationForm
+from rango.search import run_query
 
 def show_category(request, category_name_slug):
     # Create a context dictionary which we can pass
@@ -188,3 +189,20 @@ def visitor_cookies_handler(request, response):
         request.session['last_visit'] = str(current_time)
 
         return response
+
+def search(request):
+    result_list = []
+    query = ''
+
+    if request.method == 'POST':
+        query = request.POST.get('query', '').strip()
+
+        if query:
+        # Run our Bing function to get the results list!
+            result_list = run_query(query)
+
+    return render(request, 'rango/search.html', 
+                  {'result_list': result_list, 
+                   'query': query
+                   }
+              ) 
