@@ -1,6 +1,6 @@
+from multiprocessing import context
 from unicodedata import category
 from urllib import request, response
-
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from rango.models import Category, Page
@@ -34,6 +34,23 @@ def show_category(request, category_name_slug):
         # the database to the context dictionary.
         # We'll use this in the template to verify that the category exists.
         context_dict['category'] = category
+
+        context_dict['result_list'] = []
+        context_dict['query'] = ''
+
+        if request.method == 'POST':
+            if not request.user.is_authenticated:
+                return redirect('accounts:login')
+        
+         # NEW: handle search
+            query = request.POST.get('query', '').strip()
+            context_dict['query'] = query
+
+            if query:
+                # example search logic (replace with your real search)
+                result_list = run_query(query)  # your existing search function
+                context_dict['result_list'] = result_list
+                
     except Category.DoesNotExist:
         # We get here if we didn't find the specified category.
         # Don't do anything -
@@ -191,22 +208,22 @@ def visitor_cookies_handler(request, response):
 
         return response
 
-def search(request):
-    result_list = []
-    query = ''
+# def search(request):
+#     result_list = []
+#     query = ''
 
-    if request.method == 'POST':
-        query = request.POST.get('query', '').strip()
+#     if request.method == 'POST':
+#         query = request.POST.get('query', '').strip()
 
-        if query:
-        # Run our Bing function to get the results list!
-            result_list = run_query(query)
+#         if query:
+#         # Run our Bing function to get the results list!
+#             result_list = run_query(query)
 
-    return render(request, 'rango/search.html', 
-                  {'result_list': result_list, 
-                   'query': query
-                   }
-              ) 
+#     return render(request, 'rango/search.html', 
+#                   {'result_list': result_list, 
+#                    'query': query
+#                    }
+#               ) 
 
 def goto_url(request):
     page_id = None

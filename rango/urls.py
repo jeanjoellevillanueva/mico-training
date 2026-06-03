@@ -16,6 +16,6 @@ urlpatterns = [
     path('restricted/', views.restricted, name='restricted'), # New Mapping for the restricted view
     #path('logout/', views.user_logout, name='logout'), # New Mapping for the logout view
     path('add_page/', views.add_page, name='add_page'),
-    path('search/', views.search, name='search'),
-    path('goto/', views.track_url, name='goto'),
+    # path('search/', views.search, name='search'),
+    path('goto/', views.goto_url, name='goto'),
 ]
