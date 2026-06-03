@@ -25,7 +25,8 @@ def show_category(request, category_name_slug):
         
         # Retrieve all of the associated pages.
         # The filter() will return a list of page objects or an empty list.
-        pages = Page.objects.filter(category=category)
+        # order_by('-views') will order the pages by the number of views in descending order.
+        pages = Page.objects.filter(category=category).order_by('-views')
 
         # Adds our results list to the template context under name pages.
         context_dict['pages'] = pages
@@ -206,3 +207,25 @@ def search(request):
                    'query': query
                    }
               ) 
+
+def goto_url(request):
+    page_id = None
+    url = '/rango/'
+
+    if request.method == 'GET':
+        if 'page_id' in request.GET:
+            page_id = request.GET['page_id']
+
+            try:
+                page = Page.objects.get(id=page_id)
+
+                page.views += 1
+                page.save()
+
+                url = page.url
+
+            except Page.DoesNotExist:
+                pass
+
+    return redirect(url)
+
