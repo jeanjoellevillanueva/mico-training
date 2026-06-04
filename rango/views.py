@@ -3,7 +3,7 @@ from unicodedata import category
 from urllib import request, response
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from rango.models import Category, Page
+from rango.models import Category, Page, UserProfile
 from rango.forms import  CategoryForm, PageForm
 from django.urls import reverse
 from rango.forms import UserForm, UserProfileForm 
@@ -245,4 +245,26 @@ def goto_url(request):
                 pass
 
     return redirect(url)
+
+def register_profile(request):
+    form = UserProfileForm()
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect('index')
+        else:
+            print(form.errors)
+
+    return render(request, 'registration/profile_registration.html', {'form': form})
+
+@login_required
+def profile(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    context_dict = {'user_profile': user_profile}
+    return render(request, 'rango/profile.html', context=context_dict)
 
