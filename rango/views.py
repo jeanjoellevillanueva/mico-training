@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.contrib.auth.forms import UserCreationForm
 from rango.search import run_query
+from django.contrib.auth.models import User
+
 
 def show_category(request, category_name_slug):
     # Create a context dictionary which we can pass
@@ -263,8 +265,22 @@ def register_profile(request):
     return render(request, 'registration/profile_registration.html', {'form': form})
 
 @login_required
-def profile(request):
-    user_profile = UserProfile.objects.get(user=request.user)
-    context_dict = {'user_profile': user_profile}
+def profile(request, username):
+    user = User.objects.get(username=username)
+    user_profile, created = UserProfile.objects.get_or_create(user=user)
+
+    can_edit = False
+    if request.user.username == username:
+        can_edit = True
+
+    context_dict = {
+        'user_profile': user_profile, 
+        'selected_user': user,
+        'can_edit': can_edit
+        }
+
     return render(request, 'rango/profile.html', context=context_dict)
 
+def users(request):
+    user_list = User.objects.all()
+    return render(request, 'rango/users.html', {'users': user_list})

@@ -18,5 +18,6 @@ urlpatterns = [
     path('add_page/', views.add_page, name='add_page'),
     # path('search/', views.search, name='search'),
     path('goto/', views.goto_url, name='goto'),
-    path('profile/', views.profile, name='profile'),
+    path('profile/<str:username>/', views.profile, name='profile'),
+    path('users/', views.users, name='users'),
 ]

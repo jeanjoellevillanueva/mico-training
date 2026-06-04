@@ -1,0 +1,20 @@
+{% extends 'rango/base.html' %}
+    {% load static %}
+
+    {% block title_block %}
+        Users
+    {% endblock %}
+
+    {% block body_block %}
+            <h1>Users</h1>
+
+            <ul>
+            {% for user in users %}
+                <li>
+                    <a href="{% url 'rango:profile' user.username %}">
+                        {{ user.username }}
+                    </a>
+                </li>
+            {% endfor %}
+            </ul>
+    {% endblock %}
