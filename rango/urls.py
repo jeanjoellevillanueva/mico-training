@@ -1,23 +1,52 @@
 from django.urls import path, include
 from rango import views
+from rango.views import AboutView
+
+app_name = 'rango'
 
 app_name = 'rango'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('about/', views.about, name='about'),
-    path('category/<slug:category_name_slug>/',
-         views.show_category, name='show_category'),
-    path('add_category/', views.add_category, name='add_category'),
-    path('category/<slug:category_name_slug>/add_page/',
-         views.add_page, name='add_page'),
-    #path('login/', views.user_login, name='login'), # New Mapping for the login view
-    path('register/', views.register, name='register'),
-    path('restricted/', views.restricted, name='restricted'), # New Mapping for the restricted view
-    #path('logout/', views.user_logout, name='logout'), # New Mapping for the logout view
-    path('add_page/', views.add_page, name='add_page'),
-    # path('search/', views.search, name='search'),
-    path('goto/', views.goto_url, name='goto'),
-    path('profile/<str:username>/', views.profile, name='profile'),
-    path('users/', views.users, name='users'),
+
+    # 🏠 HOME
+    path('', views.IndexView.as_view(), name='index'),
+
+    # ℹ️ ABOUT
+    path('about/', views.AboutView.as_view(), name='about'),
+
+    # 📂 CATEGORY DETAIL
+    path(
+        'category/<slug:category_name_slug>/',
+        views.ShowCategoryView.as_view(),
+        name='show_category'
+    ),
+
+    # ➕ ADD CATEGORY
+    path(
+        'add_category/',
+        views.AddCategoryView.as_view(),
+        name='add_category'
+    ),
+
+    # ➕ ADD PAGE (inside category)
+    path(
+        'category/<slug:category_name_slug>/add_page/',
+        views.AddPageView.as_view(),
+        name='add_page'
+    ),
+
+    # 🔐 REGISTER
+    path('register/', views.RegisterView.as_view(), name='register'),
+
+    # 🚫 RESTRICTED
+    path('restricted/', views.RestrictedView.as_view(), name='restricted'),
+
+    # 🔁 GOTO URL tracking
+    path('goto/', views.GotoURLView.as_view(), name='goto'),
+
+    # 👤 PROFILE
+    path('profile/<str:username>/', views.ProfileView.as_view(), name='profile'),
+
+    # 👥 USERS LIST
+    path('users/', views.UsersView.as_view(), name='users'),
 ]

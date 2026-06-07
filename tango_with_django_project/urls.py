@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.IndexView.as_view(), name='index'),
     path('rango/', include('rango.urls')),
     # The above maps any URLs starting with rango/ to be handled by rango.urls, and we have not yet created that file, so we will do that next.
     path('admin/', admin.site.urls),
