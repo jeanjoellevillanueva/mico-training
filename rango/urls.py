@@ -47,6 +47,8 @@ urlpatterns = [
     # 👤 PROFILE
     path('profile/<str:username>/', views.ProfileView.as_view(), name='profile'),
 
+    path('profiles/', views.ListProfilesView.as_view(), name='list_profiles'),
+
     # 👥 USERS LIST
     path('users/', views.UsersView.as_view(), name='users'),
 ]

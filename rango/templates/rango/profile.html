@@ -1,20 +1,51 @@
 {% extends 'rango/base.html' %}
-    {% load static %}
+{% load static %}
 
     {% block title_block %}
-        User Profile
+        Profile for {{ selected_user.username }}
     {% endblock %}
 
-    {% block body_block %}
-        <h1>User Profile</h1>
+        {% block body_block %}
+         <div class="container-fluid py-3">
+          <div class="row bg-light rounded-3">
+           <h1 class="display-5 fw-bold">{{ selected_user.username }}'s Profile</h1>
+          </div>
 
-        <p>Username: {{ selected_user.username }}</p>
-        <p>Email: {{ user.email }}</p>
-        <p>Website: {{ user_profile.website }}</p>
+        <div class="col-md-6">
+            <!-- Profile Page Exercies -->
+            {% if user_profile.picture %}
+                <img src="{{ user_profile.picture.url }}"
+                    class="rounded-circle"
+                    width="300"
+                    height="300"
+                    alt="{{ selected_user.username }}'s profile image" />
+            {% else %}
+                <img src="https://loremflickr.com/300/300/person"
+                    class="rounded-circle"
+                    width="300"
+                    height="300"
+                    alt="placeholder profile image" />
+            {% endif %}
 
-        {% if user_profile.picture %}
-            <img src="{{ user_profile.picture.url }}" alt="Profile Picture" style="max-width: 200px;">
-        {% else %}
-            <p>No profile picture available.</p>
-        {% endif %}
-    {% endblock %}
+        </div>
+            <!--                     -->
+        <div class="col-md-6">
+            {% if selected_user == user %}
+                <form method="post" action="." enctype="multipart/form-data">
+           
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                 <input type="submit" value="Update" />
+                </form>
+            {% else %}
+
+            <p>
+            <strong>Website:</strong>
+            <a href="{{ user_profile.website }}">{{ user_profile.website }}</a>
+            </p>
+           {% endif %}
+           </div>
+          </div>
+         </div>
+        {% endblock %}
