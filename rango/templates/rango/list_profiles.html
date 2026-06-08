@@ -18,7 +18,7 @@
               <div class="card-body">
               {% for list_user in user_profile_list %}
                 <div class="list-group-item">
-
+                    <!-- PROFILE PAGE EXERCIES -->
                 {% if list_user.picture %}
                 <img src="{{ list_user.picture.url }}"
                         width="50"
@@ -38,6 +38,7 @@
                 </h4>
                 </div>
                 {% endfor %}
+                <!--           -->
              </div>
             </div>
            {% else %}

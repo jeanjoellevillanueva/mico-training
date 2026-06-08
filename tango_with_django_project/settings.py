@@ -136,6 +136,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 LOGIN_URL = 'rango:login' # “If a user is NOT logged in, send them to this page.”
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
