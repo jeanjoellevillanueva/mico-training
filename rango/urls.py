@@ -51,4 +51,6 @@ urlpatterns = [
 
     # 👥 USERS LIST
     path('users/', views.UsersView.as_view(), name='users'),
+
+    path('like_category/', views.LikeCategoryView.as_view(), name='like_category'),
 ]

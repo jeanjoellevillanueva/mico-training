@@ -12,7 +12,21 @@
     {% block body_block %}
 
         {% if category %}
-            <h1>{{ category.name }}</h1>
+            <h1>{{ category.name }}</h1><br />
+            <!-- AJAX FUNCTION for like -->
+            <div>
+                <strong id="like_count">{{ category.likes }}</strong> likes
+                {% if user.is_authenticated %}
+                <button id="like_btn"
+                        data-categoryid="{{ category.id }}"
+                        class="btn btn-primary btn-sm"
+                        type="button">
+                    
+                <span data-feather="thumbs-up"></span>
+                    Like Category
+                </button>
+                {% endif %}
+            </div>
 
             <p>{{ category.slug }}</p>
             
