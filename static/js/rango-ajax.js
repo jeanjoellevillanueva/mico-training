@@ -1,7 +1,7 @@
 console.log("AJAX FILE LOADED");
 
 $(document).ready(function() {
-    console.log("READY");
+    console.log("JS READY");
 
     $('#like_btn').click(function() {
         console.log("CLICKED");
@@ -18,4 +18,19 @@ $(document).ready(function() {
         });
 
     });
+
+    $('#search-input').keyup(function() {
+        console.log("AJAX TRIGGERED");
+        var query;
+        query = $(this).val();
+
+        $.get('/rango/suggest/', 
+            {'suggestion': query},
+             function(data) {
+            console.log("AJAX RESPONSE RECEIVED");
+                $('#categories-listing').html(data);
+             }
+        ); 
+    });
+
 });
