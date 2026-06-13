@@ -140,6 +140,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 LOGIN_URL = 'rango:login' # “If a user is NOT logged in, send them to this page.”
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
