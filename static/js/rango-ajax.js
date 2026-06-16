@@ -21,6 +21,7 @@ $(document).ready(function() {
 
     $('#search-input').keyup(function() {
         console.log("AJAX TRIGGERED");
+
         var query;
         query = $(this).val();
 
@@ -28,7 +29,8 @@ $(document).ready(function() {
             {'suggestion': query},
              function(data) {
             console.log("AJAX RESPONSE RECEIVED");
-                $('#categories-listing').html(data);
+            console.log("UPDATING SEARCH RESULTS");
+                $('#search-results').html(data);
              }
         ); 
     });

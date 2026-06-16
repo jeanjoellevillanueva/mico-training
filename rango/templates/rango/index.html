@@ -8,29 +8,121 @@
     {% block body_block %}
     
     <div class="container-fluid py-3">
-     <div class="row bg-light rounded-3">
-        <h1 class="display-5 fw-bold">Rango says...</h1>
-        <p class="col-md-8 fs-4">
-            {% if user.is_authenticated %}
-                howdy {{ user.username }}!
-            {% else %}
-                hey there partner!
-            {% endif %} <br />
+
+     <div class="p-5 mb-4 bg-light rounded-3">
+
+        <h1 class="display-5 fw-bold">
+            Discover and Share Useful Websites
+        </h1>
+
+        <p class="lead">
+            Browse categories, discover useful resources,
+            and contribute pages to help the community.
         </p>
-            <strong>{{ aboldmessage }}</strong><br />
+
+        <div class="row mt-4">
+
+            <div class="col-md-8">
+
+                <input
+                    type="search"
+                    id="search-input"
+                    class="form-control form-control-lg"
+                    placeholder="Search categories..." />
+
+            </div>
+
         </div>
 
-    <div class="row py-4">
+        <div class="row mt-3">
+
+            <div class="col-md-8">
+
+                <div id="search-results"
+                    class="list-group mt-2">
+                </div>
+
+            </div>
+
+        </div>
+
+        {% if user.is_authenticated %}
+          <p class="text-muted">
+            Welcome back, {{ user.username }}
+          </p>
+        {% endif %}
+
+     </div>
+        <!--  HERO SECTION ENDS  -->
+
+     <div class="row mb-4">
+
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Add Category</h5>
+                <p>Create a new category.</p>
+
+                <a href="{% url 'rango:add_category' %}"
+                   class="btn btn-primary">
+                    Add
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">My Profile</h5>
+                <p>View and edit your profile.</p>
+
+                <a href="{% url 'rango:profile' user.username %}"
+                   class="btn btn-success">
+                    Profile
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Browse Categories</h5>
+                <p>Explore all available categories.</p>
+
+                <a href="#"
+                   class="btn btn-secondary">
+                    Browse
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+    <div class="row mt-4">
      <div class="col-md-6">
       <div class="h-100 p-5 bg-light rounded-3">
         <h2>Most Liked Categories</h2>
+
         {% if categories %}
+
          <ul class="list-group">
             {% for category in categories %}
-                <li class="list-group-item">
-                <!-- The following line is changed to add an HTML hyperlink -->
-                <a href="{% url 'rango:show_category' category.slug %}">{{ category.name }}</a>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <!-- The following line is changed to add an HTML hyperlink -->
+                    <a href="{% url 'rango:show_category' category.slug %}">
+                        {{ category.name }}
+                    </a>
+
+                    <span class="badge bg-primary rounded-pill">
+                        {{ category.likes }}
+                    </span>
                 </li>
+
             {% endfor %}
             </ul>
         {% else %}
@@ -38,19 +130,33 @@
         {% endif %}
         </div>
     </div>
+
+
     <div class="col-md-6">
      <div class="h-100 p-5 bg-light rounded-3">
-      <h2>Most Viewed Pages</h2>
+
+      <h2>Popular Resources</h2>
+
        {% if pages %}
         <ul class="list-group">
           {% for page in pages %}
+
             <li class="list-group-item">
-           <a href="{{ page.url }}">{{ page.title }}</a></li>
-          {% endfor %}
+
+                <a href="{{ page.url }}"
+                   target="_blank">
+                    {{ page.title }}
+                </a>
+            
+            </li>
+                {% endfor %}
         </ul>
+        
        {% else %}
          <strong>There are no pages present.</strong>
        {% endif %}
+
+
      </div>
     </div>
     </div>
