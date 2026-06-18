@@ -46,6 +46,8 @@ class Category(models.Model):
     likes = models.IntegerField(default=0)
     slug = models.SlugField(unique=True)
 
+    date_added = models.DateTimeField(default=timezone.now)
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
@@ -61,6 +63,8 @@ class Page(models.Model):
     title = models.CharField(max_length=128)
     url = models.URLField()
     views = models.IntegerField(default=0)
+
+    date_added = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title 

@@ -74,12 +74,21 @@ class IndexView(View):
 
         category_list = Category.objects.order_by('-likes')[:5]
         page_list = Page.objects.order_by('-views')[:5]
-        
+
+        recent_categories = Category.objects.order_by('-date_added')[:5]
+        recent_pages = Page.objects.order_by('-date_added')[:5]
+
         context_dict = {
-            'boldmessage:': 'Crunchy, creamy, cookie, candy, cupcake!',
+            'boldmessage': 'Crunchy, creamy, cookie, candy, cupcake!',
             'categories': category_list,
             'pages': page_list,
-            'visits': int(request.session.get('visits', '1')) # IMPORTANT: use session not cookies
+            'visits': int(request.session.get('visits', '1')), # IMPORTANT: use session not cookies
+
+            'total_categories': Category.objects.count(),
+            'total_pages': Page.objects.count(),
+            'total_users': User.objects.count(),
+            'recent_categories': recent_categories,
+            'recent_pages': recent_pages,
         }
         
         # Obtain our Response object early so we can add cookie information.

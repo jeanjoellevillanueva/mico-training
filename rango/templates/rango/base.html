@@ -48,11 +48,7 @@
 
     {% if user.is_authenticated %}
 
-      <li class="nav-item">
-        <a class="nav-link text-white" href="{% url 'rango:profile' user.username %}">
-          Profile
-        </a>
-      </li>
+    
 <!--
       <li class="nav-item">
          <a class="nav-link" href="{% url 'rango:list_profiles' %}">
@@ -79,18 +75,54 @@
         </a>
       </li>
 
-      <li class="nav-item">
-        <a class="nav-link text-white" href="{% url 'password_change' %}">
-          Change Password
-        </a>
-      </li>
+    <li class="nav-item dropdown">
 
-      <form method="post" action="{% url 'logout' %}" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-link nav-link text-white p-0">
-          Logout
-        </button>
-      </form>
+      <a class="nav-link dropdown-toggle text-white"
+        href="#"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
+
+        {{ user.username }}
+
+      </a>
+
+      <ul class="dropdown-menu dropdown-menu-end">
+
+          <li>
+              <a class="dropdown-item"
+                href="{% url 'rango:profile' user.username %}">
+                My Profile
+              </a>
+          </li>
+
+          <li>
+              <a class="dropdown-item"
+                href="{% url 'password_change' %}">
+                Change Password
+              </a>
+          </li>
+
+          <li>
+              <hr class="dropdown-divider">
+          </li>
+
+          <li>
+              <form method="post"
+                    action="{% url 'logout' %}">
+                  {% csrf_token %}
+                  <button type="submit"
+                          class="dropdown-item">
+                      Logout
+                  </button>
+              </form>
+          </li>
+
+      </ul>
+
+</li>
+
+      
 
     {% else %}
 
@@ -123,16 +155,19 @@
           placeholder="Search..." />
           </div>
       -->
-    <!--
+    
     <div class="position-sticky pt-3 sidebar-sticky">
+
       <h6 class="px-3 text-muted text-uppercase">
            Categories
       </h6>
-       <div id="categories-listing">
-            {% include 'rango/category_list.html' %}
-       </div>
+
+      <div id="categories-listing">
+          {% get_category_list %}
+      </div>
+
     </div>
-    -->
+    
   <!--
         <ul class="nav flex-column">
             <li class="nav-item">
@@ -151,40 +186,7 @@
   -->
         <!-- SIDEBAR -->
       
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-          <span>Quick Action</span>
-        </h6>
-        <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'rango:add_category' %}">
-              <span data-feather="file-text" class="align-text-bottom"></span>
-              Add New Category
-            </a>
-          </li>
-          {% if user.is_authenticated %}
-          <!-- Show these links when the user is logged in -->
-          <li class="nav-item">
-          <a class="nav-link" href="{% url 'rango:restricted' %}">
-            <span data-feather="file-text" class="align-text-bottom"></span>  
-            Restricted Page</a>
-        </li>
-          
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-              <span>Account</span>
-          </h6>
-
-          <li class="nav-item">
-          <a class="nav-link" href="{% url 'password_change' %}">
-            <span data-feather="file-text" class="align-text-bottom"></span>  
-            Change Password</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'rango:about' %}">
-            <span data-feather="file-text" class="align-text-bottom"></span>  
-            About</a>
-        </li>
-          {% endif %}
-        </ul>
+        
     </div>
     </nav>
   
