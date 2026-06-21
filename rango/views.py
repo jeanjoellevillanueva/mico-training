@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 
 from datetime import datetime
 
-from rango.models import Category, Page, UserProfile
+from rango.models import Category, Page, UserProfile, Bookmark
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from rango.search import run_query
 
@@ -487,3 +487,39 @@ class SearchAddPageView(View):
 
         pages = Page.objects.filter(category=category).order_by('-views')
         return render(request, 'rango/page_listing.html', {'pages': pages})
+
+
+
+# When adding a features Step 3 (import the feature created)
+# When adding a features Step 4 (add save bookmark view)
+
+class SaveBookmarkView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        page_id = request.GET.get('page_id')
+
+        try:
+            page = Page.objects.get(id=page_id)
+        except Page.DoesNotExist:
+            return redirect('rango:index')
+        
+        Bookmark.objects.get_or_create(
+            user=request.users,
+            page=page
+        )
+
+        return redirect(
+            reverse('rango:show_category',
+                    kwargs={'category_name_slug': page.category.slug})
+        )
+    
+# When adding a features Step 5 (Add My Bookmarks View)
+
+class MyBookmarksView(View):
+    @method_decorator(login_required)
+    def get (self, request):
+        bookmarks = Bookmark.objects.filter(user=request.user)
+
+        return render(request, 'rango/bookmarks.html', {
+            'bookmarks': bookmarks
+        })

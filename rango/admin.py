@@ -1,7 +1,7 @@
 from django.contrib import admin
-from rango.models import Category, Page 
 from .models import Question, Choice
-from rango.models import UserProfile 
+from rango.models import UserProfile, Category, Page, Bookmark
+
 # Register your models here.
 
 # Chapter 7 of tutorial of Writing your first Django app 
@@ -35,9 +35,15 @@ class PageAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)} 
 
+# When adding a features Step 2 (Register It In Admin)
+class BookmarkAdmin(admin.ModelAdmin):
+    list_display = ('user', 'page', 'date_saved')
+    list_filter = ('date_saved',)
+    search_fields = ('user__username', 'page__title')
 
 # This code telling Django to “Make these models appear in the admin panel.”
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Page, PageAdmin) 
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(UserProfile)
+admin.site.register(Bookmark, BookmarkAdmin)

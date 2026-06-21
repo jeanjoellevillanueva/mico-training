@@ -1,0 +1,36 @@
+{% extends 'rango/base.html' %}
+
+{% block title_block %}
+    My Bookmarks
+{% endblock %}
+<!-- When adding a features Step 8 (Create Bookmarks Template) -->
+{% block body_block %}
+
+<h1>My Bookmarks</h1>
+
+{% if bookmarks %}
+    <div class="list-group mt-3">
+        {% for bookmark in bookmarks %}
+            <a href="{% url 'rango:goto' %}?page_id={{ bookmark.page.id }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="list-group-item list-group-item-action">
+
+                <strong>{{ bookmark.page.title }}</strong>
+
+                <br>
+
+                <small class="text-muted">
+                    Category: {{ bookmark.page.category.name }}
+                </small>
+
+            </a>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-muted mt-3">
+        You have not saved any resources yet.
+    </p>
+{% endif %}
+
+{% endblock %}

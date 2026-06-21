@@ -98,3 +98,16 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+## When adding a features Step 1 (Add A Bookmark Model)
+class Bookmark(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    page = models.ForeignKey(Page, on_delete=models.CASCADE)
+    date_saved = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        unique_together = ('user', 'page')
+        ordering = ['-date_saved']
+
+    def __str__(self):
+        return f'{self.user.username} saved {self.page.title}'

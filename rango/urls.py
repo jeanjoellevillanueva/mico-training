@@ -57,4 +57,9 @@ urlpatterns = [
     path('suggest/', views.CategorySuggestionView.as_view(), name='suggest'),
 
     path('search_add_page/', views.SearchAddPageView.as_view(), name='search_add_page'),
+
+# When adding a features Step 6 (Add URLS)
+    path('save_bookmark/', views.SaveBookmarkView.as_view(), name='save_bookmark'),
+
+    path('bookmarks/', views.MyBookmarksView.as_view(), name='bookmarks')
 ]
