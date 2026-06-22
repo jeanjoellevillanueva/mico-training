@@ -111,3 +111,16 @@ class Bookmark(models.Model):
 
     def __str__(self):
         return f'{self.user.username} saved {self.page.title}'
+    
+class BrokenLinkReport(models.Model):
+    page = models.ForeignKey(Page, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reason = models.TextField(blank=True)
+    date_reported = models.DateTimeField(default=timezone.now)
+    resolved = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-date_reported']
+
+    def __str__(self):
+        return f'{self.page.title} reported by {self.user.username}'

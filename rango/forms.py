@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category, Page
+from .models import Category, Page, BrokenLinkReport
 from django.contrib.auth.models import User # Chapter 9.4 User Model (Since we reference the default User model, we need to import it)
 from rango.models import UserProfile 
 
@@ -47,3 +47,17 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('website', 'picture')
+
+class BrokenLinkReportForm(forms.ModelForm):
+    reason = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'rows': 4,
+            'placeholder': 'Optional: tell us what is wrong with this link.'
+        })
+    )
+    
+    class Meta:
+        model = BrokenLinkReport
+        fields = ('reason',)

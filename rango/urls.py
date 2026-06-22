@@ -61,5 +61,7 @@ urlpatterns = [
 # When adding a features Step 6 (Add URLS)
     path('save_bookmark/', views.SaveBookmarkView.as_view(), name='save_bookmark'),
 
-    path('bookmarks/', views.MyBookmarksView.as_view(), name='bookmarks')
+    path('bookmarks/', views.MyBookmarksView.as_view(), name='bookmarks'),
+
+    path('page/<int:page_id>/report', views.ReportBrokenLinkView.as_view(), name='report_broken_link')
 ]

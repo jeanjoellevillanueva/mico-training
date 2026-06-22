@@ -13,8 +13,8 @@ from django.contrib.auth.models import User
 
 from datetime import datetime
 
-from rango.models import Category, Page, UserProfile, Bookmark
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
+from rango.models import Category, Page, UserProfile, Bookmark, BrokenLinkReport
+from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, BrokenLinkReportForm
 from rango.search import run_query
 
 class ShowCategoryView(View):
@@ -522,4 +522,43 @@ class MyBookmarksView(View):
 
         return render(request, 'rango/bookmarks.html', {
             'bookmarks': bookmarks
+        })
+    
+class ReportBrokenLinkView(View):
+    @method_decorator(login_required)
+    def get(self, request, page_id):
+        try:
+            page = Page.objects.get(id=page_id)
+        except Page.DoesNotExist:
+            return redirect('rango:index')
+        
+        form = BrokenLinkReportForm()
+
+        return render(request, 'rango/report_broken_link.html', {
+            'form': form,
+            'page': page
+        })
+    
+    def post(self, request, page_id):
+        try:
+            page = Page.objects.get(id=page_id)
+        except Page.DoesNotExist:
+            return redirect('rango:index')
+        
+        form = BrokenLinkReportForm(request.POST)
+
+        if form.is_valid():
+            report = form.save(commit=False)
+            report.page = page
+            report.user = request.user
+            report.save()
+
+            return redirect(
+                reverse('rango:show_category',
+                        kwargs={'category_name_slug': page.category.slug})
+            )
+
+        return render(request, 'rango/report_broken_link.html', {
+            'form': form,
+            'page': page
         })

@@ -54,6 +54,11 @@
                                     class="btn btn-outline-primary btn-sm ms-2">
                                         Save
                                     </a>
+
+                                    <a href="{% url 'rango:report_broken_link' page.id %}"
+                                    class="btn btn-outline-danger btn-sm ms-2">
+                                        Report
+                                    </a>
                                 {% endif %}
                             </li>
                         {% endfor %}
@@ -104,7 +109,6 @@
                                             data-url="{{ result.link }}">
                                         Add
                                     </button>
-
                                     <p>{{ result.snippet|safe|escape }}</p>
 
                                 </div>

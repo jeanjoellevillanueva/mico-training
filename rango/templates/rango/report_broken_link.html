@@ -1,0 +1,32 @@
+{% extends 'rango/base.html' %}
+
+{% block title_block %}
+    Report Broken Link
+{% endblock %}
+
+{% block body_block %}
+
+<h1>Report Broken Link</h1>
+
+<p class="text-muted">
+    You are reporting: <strong>{{ page.title }}</strong>
+</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        {{ form.reason }}
+    </div>
+
+    <button type="submit" class="btn btn-danger">
+        Submit Report
+    </button>
+
+    <a href="{% url 'rango:show_category' page.category.slug %}"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+</form>
+
+{% endblock %}
