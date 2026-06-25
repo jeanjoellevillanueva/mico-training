@@ -1,5 +1,5 @@
 from django import forms
-from .models import Category, Page, BrokenLinkReport
+from .models import Category, Page, BrokenLinkReport, LearningNote
 from django.contrib.auth.models import User # Chapter 9.4 User Model (Since we reference the default User model, we need to import it)
 from rango.models import UserProfile 
 
@@ -61,3 +61,35 @@ class BrokenLinkReportForm(forms.ModelForm):
     class Meta:
         model = BrokenLinkReport
         fields = ('reason',)
+
+class LearningNoteForm(forms.ModelForm):
+    title = forms.CharField(
+        max_length=128,
+        help_text="Give your tip a short title."
+    )
+
+    concept = forms.CharField(
+        max_length=128,
+        help_text="Example: Beginner friendly, Useful guide, Warning, Best resource."
+    )
+
+    explanation = forms.CharField(
+        widget=forms.Textarea(attrs={
+            'rows': 5,
+            'class': 'form-control',
+            'placeholder': 'Share a helpful tip about this category or resource.'
+        })
+    )
+
+    code_example = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={
+            'rows': 6,
+            'class': 'form-control',
+            'placeholder': 'Optional: add an example, command, quote, or extra detail.'
+        })
+    )
+
+    class Meta:
+        model = LearningNote
+        fields = ('category', 'page', 'title', 'concept', 'explanation', 'code_example')

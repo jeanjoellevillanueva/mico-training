@@ -13,8 +13,8 @@ from django.contrib.auth.models import User
 
 from datetime import datetime
 
-from rango.models import Category, Page, UserProfile, Bookmark, BrokenLinkReport
-from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, BrokenLinkReportForm
+from rango.models import Category, Page, UserProfile, Bookmark, BrokenLinkReport, LearningNote
+from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm, BrokenLinkReportForm, LearningNoteForm
 from rango.search import run_query
 
 class ShowCategoryView(View):
@@ -75,6 +75,8 @@ class IndexView(View):
         category_list = Category.objects.order_by('-likes')[:5]
         page_list = Page.objects.order_by('-views')[:5]
 
+        all_categories = Category.objects.order_by('name')
+
         recent_categories = Category.objects.order_by('-date_added')[:5]
         recent_pages = Page.objects.order_by('-date_added')[:5]
 
@@ -82,6 +84,7 @@ class IndexView(View):
             'boldmessage': 'Crunchy, creamy, cookie, candy, cupcake!',
             'categories': category_list,
             'pages': page_list,
+            'all_categories': all_categories,
             'visits': int(request.session.get('visits', '1')), # IMPORTANT: use session not cookies
 
             'total_categories': Category.objects.count(),
@@ -562,3 +565,73 @@ class ReportBrokenLinkView(View):
             'form': form,
             'page': page
         })
+    
+class LearningNotesView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        notes = LearningNote.objects.all()
+
+        return render(request, 'rango/learning_notes.html', {
+            'notes': notes
+        })
+    
+    def post(self, request):
+        form = LearningNoteForm(request.POST)
+
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.user = request.user
+            note.save()
+
+            return redirect('rango:learning_notes')
+        
+        return render(request, 'rango/add_learning_note.html', {
+            'form': form
+        })
+    
+class AddLearningNoteView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        form = LearningNoteForm()
+
+        return render(request, 'rango/add_learning_note.html', {
+            'form': form
+        })
+
+    @method_decorator(login_required)
+    def post(self, request):
+        form = LearningNoteForm(request.POST)
+
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.user = request.user
+            note.save()
+
+            return redirect('rango:learning_notes')
+
+        return render(request, 'rango/add_learning_note.html', {
+            'form': form
+        })
+
+class MarkNoteReviewedView(View):
+    @method_decorator(login_required)
+    def get(self, request, note_id):
+        try:
+            note = LearningNote.objects.get(id=note_id, user=request.user)
+        except LearningNote.DoesNotExist:
+            return redirect('rango:learning_notes')
+        
+        note.reviewed = True
+        note.save()
+
+        return redirect('rango:learning_notes')
+    
+class LoadPagesView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        category_id = request.GET.get('category_id')
+        pages = Page.objects.filter(category_id=category_id).order_by('title')
+
+        return render(request, 'rango/page_dropdown_options.html', {
+            'pages': pages
+        })    

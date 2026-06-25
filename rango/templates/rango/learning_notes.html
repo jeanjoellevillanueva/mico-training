@@ -1,0 +1,64 @@
+{% extends 'rango/base.html' %}
+
+{% block title_block %}
+    My Learning Notes
+{% endblock %}
+
+{% block body_block %}
+
+<h1>Community Tips</h1>
+
+<a href="{% url 'rango:add_learning_note' %}"
+   class="btn btn-primary mb-3">
+    Add Tip
+</a>
+
+{% if notes %}
+    <div class="list-group">
+        {% for note in notes %}
+            <div class="list-group-item">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-1">{{ note.title }}</h5>
+
+                    <span class="badge bg-info">
+                        Community Tip
+                    </span>
+                </div>
+
+                <p class="mb-1">
+                    <strong>Topic:</strong> {{ note.concept }}
+                </p>
+
+                {% if note.category %}
+                    <p class="mb-1">
+                        <strong>Category:</strong> {{ note.category.name }}
+                    </p>
+                {% endif %}
+
+                {% if note.page %}
+                    <p class="mb-1">
+                        <strong>Resource:</strong> {{ note.page.title }}
+                    </p>
+                {% endif %}
+
+                <p>{{ note.explanation }}</p>
+
+                {% if note.code_example %}
+                    <pre class="bg-light p-3 border rounded"><code>{{ note.code_example }}</code></pre>
+                {% endif %}
+
+                <small class="text-muted">
+                    Posted by {{ note.date_added }}
+                </small>
+
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p class="text-muted">
+        No community tips have been added yet.
+    </p>
+{% endif %}
+
+{% endblock %}

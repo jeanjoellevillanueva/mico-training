@@ -1,0 +1,69 @@
+{% extends 'rango/base.html' %}
+
+{% block title_block %}
+    Add Learning Note
+{% endblock %}
+
+{% block body_block %}
+
+<h1>Add Community Tip</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <p>
+        {{ form.category.label_tag }}
+        {{ form.category }}
+    </p>
+
+    <p>
+        {{ form.page.label_tag }}
+        {{ form.page }}
+    </p>
+
+    <p>
+        {{ form.title.label_tag }}
+        {{ form.title }}
+    </p>
+
+    <p>
+        {{ form.concept.label_tag }}
+        {{ form.concept }}
+    </p>
+
+    <p>
+        {{ form.explanation.label_tag }}
+        {{ form.explanation }}
+    </p>
+
+    <p>
+        {{ form.code_example.label_tag }}
+        {{ form.code_example }}
+    </p>
+
+    <button type="submit" class="btn btn-primary">
+        Save Tip
+    </button>
+
+    <a href="{% url 'rango:learning_notes' %}"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+</form>
+
+<script>
+    const categorySelect = document.getElementById('id_category');
+    const pageSelect = document.getElementById('id_page');
+
+    categorySelect.addEventListener('change', function () {
+        const categoryId = this.value;
+
+        fetch("{% url 'rango:load_pages' %}?category_id=" + categoryId)
+            .then(response => response.text())
+            .then(data => {
+                pageSelect.innerHTML = data;
+            });
+    });
+</script>
+
+{% endblock %}

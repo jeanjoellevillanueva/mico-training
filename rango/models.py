@@ -124,3 +124,23 @@ class BrokenLinkReport(models.Model):
 
     def __str__(self):
         return f'{self.page.title} reported by {self.user.username}'
+    
+
+class LearningNote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    page = models.ForeignKey(Page, on_delete=models.SET_NULL, null=True, blank=True)
+
+    title = models.CharField(max_length=128)
+    concept = models.CharField(max_length=128)
+    explanation = models.TextField()
+    code_example = models.TextField(blank=True)
+
+    reviewed = models.BooleanField(default=False)
+    date_added = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['reviewed', '-date_added']
+
+    def __str__(self):
+        return self.title

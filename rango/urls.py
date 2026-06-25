@@ -63,5 +63,13 @@ urlpatterns = [
 
     path('bookmarks/', views.MyBookmarksView.as_view(), name='bookmarks'),
 
-    path('page/<int:page_id>/report', views.ReportBrokenLinkView.as_view(), name='report_broken_link')
+    path('page/<int:page_id>/report/', views.ReportBrokenLinkView.as_view(), name='report_broken_link'),
+
+    path('learning_notes/', views.LearningNotesView.as_view(), name='learning_notes'),
+
+    path('learning_notes/add/', views.AddLearningNoteView.as_view(), name='add_learning_note'),
+
+    path('learning_notes/<int:note_id>/reviewed/', views.MarkNoteReviewedView.as_view(), name='mark_note_reviewed'),
+
+    path('ajax/load_pages/', views.LoadPagesView.as_view(), name='load_pages'),
 ]

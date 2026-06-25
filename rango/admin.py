@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Question, Choice
-from rango.models import UserProfile, Category, Page, Bookmark, BrokenLinkReport
+from rango.models import UserProfile, Category, Page, Bookmark, BrokenLinkReport, LearningNote
 
 # Register your models here.
 
@@ -46,6 +46,11 @@ class BrokenLinkReportAdmin(admin.ModelAdmin):
     list_filter = ('resolved', 'date_reported')
     search_fields = ('page__title', 'user__username', 'reason')
 
+class LearningNoteAdmin(admin.ModelAdmin):
+    list_display = ('title', 'user', 'concept', 'reviewed', 'date_added')
+    list_filter = ('concept', 'reviewed', 'date_added')
+    search_fields = ('title', 'concept', 'explanation', 'user__username')
+
 
 # This code telling Django to “Make these models appear in the admin panel.”
 admin.site.register(Category, CategoryAdmin)
@@ -54,3 +59,4 @@ admin.site.register(Question, QuestionAdmin)
 admin.site.register(UserProfile)
 admin.site.register(Bookmark, BookmarkAdmin)
 admin.site.register(BrokenLinkReport, BrokenLinkReportAdmin)
+admin.site.register(LearningNote, LearningNoteAdmin)
