@@ -90,6 +90,20 @@ class LearningNoteForm(forms.ModelForm):
         })
     )
 
+    def __init__(self, *args, **kwargs):
+        super(LearningNoteForm, self).__init__(*args, **kwargs)
+
+        self.fields['page'].queryset = Page.objects.none()
+
+        if 'category' in self.data:
+            try:
+                category_id = int(self.data.get('category'))
+                self.fields['page'].queryset = Page.objects.filter(
+                    category_id=category_id
+                ).order_by('title')
+            except (ValueError, TypeError):
+                pass
+
     class Meta:
         model = LearningNote
         fields = ('category', 'page', 'title', 'concept', 'explanation', 'code_example')
